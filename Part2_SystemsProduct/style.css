@@ -1,0 +1,26 @@
+/* Floating Currency Note Animation Keyframes */
+@keyframes floatUp {
+    0% {
+        transform: translateY(110vh) rotate(0deg);
+        opacity: 0;
+    }
+    10% {
+        opacity: 0.25;
+    }
+    90% {
+        opacity: 0.25;
+    }
+    100% {
+        transform: translateY(-10vh) rotate(360deg);
+        opacity: 0;
+    }
+}
+
+.floating-note {
+    position: absolute;
+    font-weight: 800;
+    color: rgba(52, 211, 153, 0.15);
+    user-select: none;
+    pointer-events: none;
+    animation: floatUp linear infinite;
+}
