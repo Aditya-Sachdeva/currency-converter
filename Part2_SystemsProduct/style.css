@@ -1,26 +1,101 @@
-/* Floating Currency Note Animation Keyframes */
-@keyframes floatUp {
+/* 3D Perspective Context */
+.perspective-1000 {
+    perspective: 1000px;
+}
+
+/* Realistic Banknote Design Styling */
+.note-3d-card {
+    transform-style: preserve-3d;
+    will-change: transform;
+    box-shadow: 0 20px 40px -15px rgba(0, 0, 0, 0.7), 0 0 20px rgba(52, 211, 153, 0.1);
+}
+
+/* Custom Banknote Gradient Themes */
+.bg-note-usd {
+    background: linear-gradient(135deg, #11382b 0%, #0a231b 50%, #05140e 100%);
+    border-color: rgba(52, 211, 153, 0.3);
+}
+
+.bg-note-inr {
+    background: linear-gradient(135deg, #4c2612 0%, #2e160a 50%, #170a04 100%);
+    border-color: rgba(251, 146, 60, 0.3);
+}
+
+.bg-note-eur {
+    background: linear-gradient(135deg, #12284c 0%, #0a172e 50%, #040a17 100%);
+    border-color: rgba(96, 165, 250, 0.3);
+}
+
+.bg-note-gbp {
+    background: linear-gradient(135deg, #3b124c 0%, #230a2e 50%, #100417 100%);
+    border-color: rgba(192, 132, 252, 0.3);
+}
+
+.bg-note-jpy {
+    background: linear-gradient(135deg, #4c121e 0%, #2e0a11 50%, #170407 100%);
+    border-color: rgba(248, 113, 113, 0.3);
+}
+
+.bg-note-cad {
+    background: linear-gradient(135deg, #4c1212 0%, #2e0a0a 50%, #170404 100%);
+    border-color: rgba(239, 68, 68, 0.3);
+}
+
+.bg-note-aud {
+    background: linear-gradient(135deg, #12414c 0%, #0a272e 50%, #041217 100%);
+    border-color: rgba(45, 212, 191, 0.3);
+}
+
+/* Security Metallic Strip */
+.metallic-strip {
+    background: linear-gradient(90deg, 
+        transparent 0%, 
+        rgba(255,255,255,0.15) 45%, 
+        rgba(255,255,255,0.35) 50%, 
+        rgba(255,255,255,0.15) 55%, 
+        transparent 100%);
+    background-size: 200% 100%;
+    animation: metallicShine 4s linear infinite;
+}
+
+@keyframes metallicShine {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
+/* Guilloche Micro-Pattern Texture */
+.guilloche-pattern {
+    background-image: radial-gradient(rgba(255, 255, 255, 0.1) 1px, transparent 0);
+    background-size: 12px 12px;
+}
+
+/* Floating Particle Ambient Bills */
+.floating-particle-note {
+    position: absolute;
+    font-family: 'JetBrains Mono', monospace;
+    font-weight: 800;
+    user-select: none;
+    pointer-events: none;
+    will-change: transform, opacity;
+    opacity: 0.18;
+    filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
+}
+
+/* Triggered Note Transfer Glide Keyframes */
+@keyframes noteTransferGlide {
     0% {
-        transform: translateY(110vh) rotate(0deg);
-        opacity: 0;
+        transform: scale(1) rotateX(0deg) rotateY(0deg) translateY(0);
     }
-    10% {
-        opacity: 0.25;
-    }
-    90% {
-        opacity: 0.25;
+    50% {
+        transform: scale(0.92) rotateX(20deg) rotateY(-15deg) translateY(-20px);
+        opacity: 0.5;
     }
     100% {
-        transform: translateY(-10vh) rotate(360deg);
-        opacity: 0;
+        transform: scale(1) rotateX(0deg) rotateY(0deg) translateY(0);
+        opacity: 1;
     }
 }
 
-.floating-note {
-    position: absolute;
-    font-weight: 800;
-    color: rgba(52, 211, 153, 0.15);
-    user-select: none;
-    pointer-events: none;
-    animation: floatUp linear infinite;
+.animate-note-transfer {
+    animation: noteTransferGlide 0.6s cubic-bezier(0.16, 1, 0.3, 1) forwards;
 }

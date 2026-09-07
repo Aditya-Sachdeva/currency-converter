@@ -1,113 +1,199 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quantum Currency Exchange | Live System Product</title>
+    <title>Currency Converter — High Precision FX Engine</title>
     <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        mono: ['JetBrains Mono', 'Fira Code', 'monospace'],
+                        sans: ['Inter', 'system-ui', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
     <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=JetBrains+Mono:wght@400;600;800&display=swap" rel="stylesheet">
 </head>
-<body class="bg-slate-950 text-slate-100 min-h-screen flex flex-col justify-between overflow-x-hidden relative font-sans">
+<body class="bg-[#07090e] text-slate-100 min-h-screen flex flex-col justify-between overflow-x-hidden relative font-sans antialiased selection:bg-emerald-500 selection:text-black">
 
-    <!-- Animated Floating Notes Background -->
-    <div id="floating-bg" class="absolute inset-0 pointer-events-none overflow-hidden z-0"></div>
+    <!-- Interactive Ambient Floating Canvas Background -->
+    <div id="ambient-canvas-container" class="fixed inset-0 pointer-events-none z-0 overflow-hidden"></div>
 
-    <!-- Header -->
-    <header class="relative z-10 w-full p-6 border-b border-slate-800 bg-slate-900/60 backdrop-blur-md flex justify-between items-center">
-        <div>
-            <h1 class="text-2xl font-black tracking-wider text-emerald-400">FINTECH<span class="text-slate-100">PULSE</span></h1>
-            <p class="text-xs text-slate-400">Live API Foreign Exchange Converter</p>
+    <!-- Top Navigation / Header -->
+    <header class="relative z-20 w-full px-6 py-5 border-b border-slate-800/80 bg-[#0a0d14]/80 backdrop-blur-xl flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-300 p-[1px] shadow-lg shadow-emerald-500/20">
+                <div class="w-full h-full bg-slate-950 rounded-[11px] flex items-center justify-center font-black text-emerald-400 text-lg">
+                    ⇄
+                </div>
+            </div>
+            <div>
+                <h1 class="text-base font-black tracking-wider text-slate-100 uppercase">CURRENCY <span class="text-emerald-400 font-mono">//</span> CONVERTER</h1>
+                <p class="text-[10px] font-mono text-slate-400 tracking-tight">REAL-TIME INSTITUTIONAL FX ENGINE</p>
+            </div>
         </div>
-        <div id="api-status" class="text-xs px-3 py-1 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/30 flex items-center gap-2">
-            <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Live API Connected
+
+        <div class="flex items-center gap-4">
+            <div id="api-status" class="text-[11px] font-mono px-3 py-1.5 rounded-full bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 flex items-center gap-2 shadow-inner">
+                <span class="relative flex h-2 w-2">
+                  <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                LIVE API ACTIVE
+            </div>
         </div>
     </header>
 
-    <!-- Main Content -->
-    <main class="relative z-10 flex-1 flex flex-col items-center justify-center p-4">
+    <!-- Main Workspace -->
+    <main class="relative z-10 flex-1 flex flex-col items-center justify-center p-4 sm:p-8 my-auto">
         
-        <!-- Converter Card -->
-        <div class="w-full max-full max-w-lg bg-slate-900/80 backdrop-blur-xl border border-slate-800 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-emerald-950/30 transition-all duration-300 hover:border-emerald-500/40">
+        <div class="w-full max-w-xl">
             
-            <!-- Interactive Selected Currency Display Note -->
-            <div id="currency-note-display" class="w-full h-28 mb-6 rounded-2xl bg-gradient-to-r from-emerald-600 to-teal-800 p-4 flex flex-col justify-between shadow-lg relative overflow-hidden transition-all duration-500 transform scale-100 hover:scale-[1.02]">
-                <div class="flex justify-between items-start z-10">
-                    <span id="note-symbol" class="text-3xl font-extrabold text-white/90">$</span>
-                    <span id="note-code" class="text-sm font-bold tracking-widest text-emerald-200">USD</span>
+            <!-- Dynamic Realistic Banknote Visual Container -->
+            <div id="banknote-stage" class="w-full mb-6 perspective-1000">
+                <div id="banknote-card" class="note-3d-card w-full h-44 rounded-2xl p-5 shadow-2xl relative overflow-hidden transition-all duration-700 border border-white/10 flex flex-col justify-between cursor-pointer select-none">
+                    <!-- Dynamic Security Elements & Overlays -->
+                    <div class="absolute inset-0 metallic-strip opacity-30 pointer-events-none"></div>
+                    <div class="absolute inset-0 guilloche-pattern opacity-15 pointer-events-none"></div>
+                    <div id="note-glare" class="absolute inset-0 pointer-events-none bg-gradient-to-tr from-transparent via-white/10 to-transparent transition-opacity duration-300"></div>
+
+                    <!-- Top Row -->
+                    <div class="flex justify-between items-start z-10">
+                        <div>
+                            <span id="note-country" class="text-[10px] font-mono tracking-widest uppercase font-semibold text-white/70 block">UNITED STATES OF AMERICA</span>
+                            <span id="note-title" class="text-sm font-bold text-white tracking-wide">FEDERAL RESERVE NOTE</span>
+                        </div>
+                        <div class="text-right">
+                            <span id="note-symbol-large" class="text-3xl font-black font-mono text-white/90 drop-shadow-md">$100</span>
+                        </div>
+                    </div>
+
+                    <!-- Center Note Serial & Graphic Accent -->
+                    <div class="z-10 flex justify-between items-center my-auto">
+                        <div id="note-watermark-symbol" class="text-5xl font-black font-mono text-white/15 tracking-widest">
+                            USD
+                        </div>
+                        <div class="text-right font-mono text-[10px] text-white/60 tracking-widest">
+                            SERIES 2026 &bull; FX-99218
+                        </div>
+                    </div>
+
+                    <!-- Bottom Row -->
+                    <div class="flex justify-between items-end z-10 border-t border-white/10 pt-2">
+                        <div>
+                            <p class="text-[9px] font-mono uppercase tracking-wider text-white/60">Active Currency Focus</p>
+                            <p id="note-currency-name" class="text-sm font-extrabold text-white">United States Dollar</p>
+                        </div>
+                        <div id="note-badge" class="px-2.5 py-1 rounded bg-black/40 backdrop-blur-md border border-white/10 text-[10px] font-mono text-emerald-300">
+                            BASE CURRENCY
+                        </div>
+                    </div>
                 </div>
-                <div class="z-10">
-                    <p class="text-xs text-emerald-100/70 uppercase tracking-wider">Active Currency Note</p>
-                    <p id="note-name" class="text-lg font-semibold text-white">United States Dollar</p>
-                </div>
-                <!-- Decorative Watermark Pattern -->
-                <div class="absolute -right-4 -bottom-6 text-8xl font-black text-white/10 select-none pointer-events-none" id="note-watermark">$</div>
             </div>
 
-            <!-- Form -->
-            <form id="converter-form" class="space-y-5">
-                <!-- Input Amount -->
-                <div>
-                    <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">Amount</label>
-                    <input type="number" id="amount-input" step="any" value="100" placeholder="Enter amount..."
-                        class="w-full bg-slate-950 border border-slate-800 rounded-xl px-4 py-3 text-xl font-bold text-slate-100 focus:outline-none focus:border-emerald-500 transition-colors">
-                </div>
-
-                <!-- Currency Pickers -->
-                <div class="grid grid-cols-2 gap-4">
+            <!-- Main Converter Dashboard -->
+            <div class="bg-[#0e131f]/90 backdrop-blur-2xl border border-slate-800/90 rounded-3xl p-6 sm:p-8 shadow-2xl shadow-emerald-950/20 relative">
+                
+                <form id="converter-form" class="space-y-6">
+                    <!-- Amount Input -->
                     <div>
-                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">From</label>
-                        <select id="from-currency" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-3 font-semibold text-slate-200 focus:outline-none focus:border-emerald-500">
-                            <option value="USD" selected>USD ($)</option>
-                            <option value="INR">INR (₹)</option>
-                            <option value="EUR">EUR (€)</option>
-                            <option value="GBP">GBP (£)</option>
-                            <option value="JPY">JPY (¥)</option>
-                            <option value="CAD">CAD (C$)</option>
-                            <option value="AUD">AUD (A$)</option>
-                        </select>
+                        <div class="flex justify-between items-center mb-2">
+                            <label class="text-xs font-mono font-semibold text-slate-400 uppercase tracking-wider">Amount To Convert</label>
+                            <span class="text-[10px] font-mono text-slate-500">REALTIME CALCULATION</span>
+                        </div>
+                        <div class="relative">
+                            <input type="number" id="amount-input" step="any" value="1000" placeholder="0.00"
+                                class="w-full bg-[#05070c] border border-slate-800 rounded-2xl px-5 py-4 text-2xl font-mono font-black text-slate-100 focus:outline-none focus:border-emerald-500 focus:ring-2 focus:ring-emerald-500/20 transition-all">
+                            <div id="amount-symbol-prefix" class="absolute right-5 top-1/2 -translate-y-1/2 text-lg font-mono font-bold text-slate-500">
+                                USD
+                            </div>
+                        </div>
                     </div>
 
-                    <div>
-                        <label class="block text-xs font-semibold text-slate-400 uppercase tracking-wider mb-2">To</label>
-                        <select id="to-currency" class="w-full bg-slate-950 border border-slate-800 rounded-xl px-3 py-3 font-semibold text-slate-200 focus:outline-none focus:border-emerald-500">
-                            <option value="USD">USD ($)</option>
-                            <option value="INR" selected>INR (₹)</option>
-                            <option value="EUR">EUR (€)</option>
-                            <option value="GBP">GBP (£)</option>
-                            <option value="JPY">JPY (¥)</option>
-                            <option value="CAD">CAD (C$)</option>
-                            <option value="AUD">AUD (A$)</option>
-                        </select>
+                    <!-- Currency Selector Grid with Instant Swap Button -->
+                    <div class="grid grid-cols-1 sm:grid-cols-[1fr_auto_1fr] gap-3 items-center">
+                        <!-- From -->
+                        <div class="bg-[#05070c] border border-slate-800/80 rounded-2xl p-3.5 transition-all hover:border-slate-700">
+                            <label class="block text-[10px] font-mono font-semibold text-slate-400 uppercase mb-1">From Currency</label>
+                            <select id="from-currency" class="w-full bg-transparent font-semibold text-slate-100 focus:outline-none text-base cursor-pointer">
+                                <option value="USD" class="bg-slate-900">USD — US Dollar ($)</option>
+                                <option value="INR" class="bg-slate-900">INR — Indian Rupee (₹)</option>
+                                <option value="EUR" class="bg-slate-900">EUR — Euro (€)</option>
+                                <option value="GBP" class="bg-slate-900">GBP — British Pound (£)</option>
+                                <option value="JPY" class="bg-slate-900">JPY — Japanese Yen (¥)</option>
+                                <option value="CAD" class="bg-slate-900">CAD — Canadian Dollar (C$)</option>
+                                <option value="AUD" class="bg-slate-900">AUD — Australian Dollar (A$)</option>
+                            </select>
+                        </div>
+
+                        <!-- Interactive Swap Button -->
+                        <button type="button" id="swap-btn" title="Swap Currencies"
+                            class="w-12 h-12 rounded-2xl bg-slate-800 hover:bg-emerald-500 hover:text-black text-slate-300 border border-slate-700/80 flex items-center justify-center transition-all duration-300 transform hover:rotate-180 active:scale-90 mx-auto shadow-lg">
+                            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                            </svg>
+                        </button>
+
+                        <!-- To -->
+                        <div class="bg-[#05070c] border border-slate-800/80 rounded-2xl p-3.5 transition-all hover:border-slate-700">
+                            <label class="block text-[10px] font-mono font-semibold text-slate-400 uppercase mb-1">To Currency</label>
+                            <select id="to-currency" class="w-full bg-transparent font-semibold text-slate-100 focus:outline-none text-base cursor-pointer">
+                                <option value="USD" class="bg-slate-900">USD — US Dollar ($)</option>
+                                <option value="INR" selected class="bg-slate-900">INR — Indian Rupee (₹)</option>
+                                <option value="EUR" class="bg-slate-900">EUR — Euro (€)</option>
+                                <option value="GBP" class="bg-slate-900">GBP — British Pound (£)</option>
+                                <option value="JPY" class="bg-slate-900">JPY — Japanese Yen (¥)</option>
+                                <option value="CAD" class="bg-slate-900">CAD — Canadian Dollar (C$)</option>
+                                <option value="AUD" class="bg-slate-900">AUD — Australian Dollar (A$)</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <!-- Error Alert Box -->
+                    <div id="error-box" class="hidden p-4 rounded-2xl bg-rose-500/10 border border-rose-500/30 text-rose-400 text-xs font-mono"></div>
+
+                    <!-- Convert Action Button -->
+                    <button type="submit" id="convert-btn" class="w-full py-4 bg-gradient-to-r from-emerald-500 to-teal-400 hover:from-emerald-400 hover:to-teal-300 text-slate-950 font-black text-sm uppercase tracking-wider rounded-2xl transition-all duration-300 shadow-lg shadow-emerald-500/25 active:scale-[0.98]">
+                        Execute FX Conversion
+                    </button>
+                </form>
+
+                <!-- Converted Result Section -->
+                <div id="result-box" class="mt-8 pt-6 border-t border-slate-800/80 text-center relative overflow-hidden">
+                    <p class="text-[10px] font-mono text-slate-400 uppercase tracking-widest">CONVERTED VALUE</p>
+                    <div class="flex items-center justify-center gap-2 mt-2">
+                        <h2 id="result-text" class="text-4xl sm:text-5xl font-mono font-black text-emerald-400 tracking-tight transition-all">₹83,500.00</h2>
+                    </div>
+                    <div id="rate-info" class="mt-2 text-xs font-mono text-slate-400 inline-block px-3 py-1 rounded-full bg-slate-900 border border-slate-800">
+                        1 USD = 83.5000 INR
                     </div>
                 </div>
+            </div>
 
-                <!-- Error Alert Box -->
-                <div id="error-box" class="hidden p-3 rounded-xl bg-red-500/10 border border-red-500/30 text-red-400 text-xs"></div>
-
-                <!-- Convert Button -->
-                <button type="submit" id="convert-btn" class="w-full py-4 bg-emerald-500 hover:bg-emerald-400 text-slate-950 font-extrabold rounded-xl transition-all shadow-lg shadow-emerald-500/20 active:scale-95">
-                    Convert Currency
+            <!-- Log Console Drawer Trigger -->
+            <div class="mt-6 text-center">
+                <button id="toggle-log-btn" class="text-xs font-mono text-slate-500 hover:text-emerald-400 transition-colors inline-flex items-center gap-2">
+                    <span class="w-1.5 h-1.5 rounded-full bg-slate-600"></span> System Log Output (app.log)
                 </button>
-            </form>
-
-            <!-- Result Box -->
-            <div id="result-box" class="mt-6 pt-6 border-t border-slate-800 text-center">
-                <p class="text-xs text-slate-400 uppercase tracking-widest">Converted Value</p>
-                <h2 id="result-text" class="text-3xl font-black text-emerald-400 mt-1 transition-all">₹8,350.00</h2>
-                <p id="rate-info" class="text-xs text-slate-500 mt-2">1 USD = 83.50 INR</p>
             </div>
+            
+            <div id="log-container" class="hidden mt-3 w-full bg-black/90 border border-slate-800 rounded-2xl p-4 text-[11px] font-mono text-emerald-400/90 h-36 overflow-y-auto shadow-2xl"></div>
         </div>
-
-        <!-- Terminal Logs Drawer toggle -->
-        <button id="toggle-log-btn" class="mt-6 text-xs text-slate-500 hover:text-slate-300 underline">
-            View Live System Logs (app.log)
-        </button>
-        <div id="log-container" class="hidden mt-4 w-full max-w-lg bg-black border border-slate-800 rounded-xl p-4 text-[10px] font-mono text-emerald-400 h-32 overflow-y-auto"></div>
     </main>
 
-    <footer class="relative z-10 text-center py-4 text-xs text-slate-600">
-        Engineered by Aditya Sachdeva &bull; Built for Gagandeep Sir's Assignment
+    <!-- Footer -->
+    <footer class="relative z-10 text-center py-5 text-xs font-mono text-slate-600 border-t border-slate-900 bg-[#05070c]">
+        ENGINEERED BY ADITYA SACHDEVA &bull; SYSTEM PRODUCT SUBMISSION
     </footer>
 
     <script type="module" src="src/app.js"></script>
